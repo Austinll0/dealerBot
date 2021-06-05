@@ -16,9 +16,11 @@ pool = [];
 
 def loadUsers():
   return pickle.load(open("./.data/users.data","rb"));
+  print("loaded");
 def save():
   pickle.dump(users,open("./.data/users.data","wb"));
   pickle.dump(slots.jackpot,open("./.data/jackpot.data","wb"));
+  print("saved");
 
 users = loadUsers();
 
@@ -78,30 +80,30 @@ async def stats(message):
 
 async def upgrade(message,degen):
   roles = await message.channel.guild.fetch_roles();
+  badNames = ["Groovy","Dealer","@everyone","Simple Poll","DM"];
 
   for r in roles:
-    if r.name == "Groovy":
+    #print(r.name);
+    if r.name in badNames:
       roles.remove(r);
-    if r.name == "Dealer":
-      roles.remove(r);
-    if r.name == "@everyone":
-      roles.remove(r);
+      #print("- removed");
+  #print(roles);
   value = [0,501, 2500, 10000, 25000,50000,100000,1000000];
   for i in range(len(roles)):
     if(degen.moneys >= value[len(value)-i-1]):
       
       try:
         #print(roles);
-        if(message.author.roles[1] == roles[len(roles) - i - 1]):
+        if(message.author.roles[1] == roles[len(roles) - i - 2]):
           return;
       except Exception as e:
         print(e);
-        print("no old role");
+        #print("no old role");
       try:
         await message.author.remove_roles(message.author.roles[1]);
       except:
         print("no role to remove");
-      await message.author.add_roles(roles[len(roles) - i - 1])
+      await message.author.add_roles(roles[len(roles) - i - 2])
       return;
 
 async def cheat(message):

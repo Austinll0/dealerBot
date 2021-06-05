@@ -34,16 +34,18 @@ def passLine(game,roll):
   if(game.point == -1):
     if(roll.score == 7 or roll.score == 11):
       return 1;
-    elif(roll.score == 2 or roll.score == 3 or roll.score == 12):
+    elif(roll.score == 2 or roll.score == 3):
       return 0;
+    elif(roll.score == 12):
+      return -2;
   else:
-    if(roll.score == 7 or roll.score == 11):
+    if(roll.score == 7):
       return 0;
-    elif(roll.score == 2 or roll.score ==3 or roll.score ==12):
+    elif roll.score == game.point:
       return 1;
   
   return -1;
-  
+
 def noPassLine(game,roll):
   val = passLine(game,roll);
   if val == -1:
